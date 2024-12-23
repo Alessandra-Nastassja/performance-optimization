@@ -17,17 +17,19 @@ export class HttpResponseInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const startTime = Date.now();
+    localStorage.setItem('tela-anterior', window.location.pathname);
+
     const intervalId = setInterval(() => {
-    const elapsed = Date.now() - startTime;
-      
-    if (elapsed > 2000) {
-      window.dispatchEvent(new CustomEvent('elapsedUpdate', { detail: elapsed }));
-      this.router.navigate(['/feedback']);
+      const elapsed = Date.now() - startTime;
+
+      if (elapsed > 3000) {
+        window.dispatchEvent(new CustomEvent('elapsedUpdate', { detail: elapsed }));
+        this.router.navigate(['/feedback']);
       }
     }, 100); // Atualiza a cada 100ms
 
     return next.handle(request).pipe(
-      delay(3000),
+      // delay(3500), 
       tap((ev: HttpEvent<any>) => {
         if (ev instanceof HttpResponse) {
           console.log('processing response', ev);
@@ -35,7 +37,8 @@ export class HttpResponseInterceptor implements HttpInterceptor {
           if (ev.status == 200) {
             clearInterval(intervalId);
             setInterval(() => {
-              history.back();
+              let teste = localStorage.getItem('tela-anterior');
+              this.router.navigate([`${teste}`])
             }, 2000)
           }
         }
