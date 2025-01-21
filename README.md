@@ -5,7 +5,7 @@
   Implantando MicroFront-end no Angular 15+ usando Module Federation
 </p>
 <p align="center">
-   <a href="" target="_black">Artigo técnico</a>
+   <a href="https://medium.com/@alessandranastassja/implantando-microfront-end-no-angular-15-usando-module-federation-81791b519845" target="_black">Artigo técnico</a>
 </p>
 
 ****
